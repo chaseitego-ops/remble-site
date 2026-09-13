@@ -119,17 +119,4 @@
     items.forEach(function (el) { io.observe(el); });
   }
 
-  /* ── Taslak (placeholder) görünürlüğü ──
-     Yayına almadan önce bu blok ve #phToggle butonu silinecek. */
-  var phBtn = document.getElementById('phToggle');
-  if (phBtn) {
-    var KEY = 'remble-ph-off';
-    if (localStorage.getItem(KEY) === '1') document.body.classList.add('ph-off');
-    phBtn.addEventListener('click', function () {
-      var off = document.body.classList.toggle('ph-off');
-      localStorage.setItem(KEY, off ? '1' : '0');
-    });
-  }
-  /* yüklenen sürümü doğrulamak için: konsola  __remble  yaz */
-  window.__remble = { v: 3, smoothScroll: true };
 })();
