@@ -139,14 +139,14 @@ button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; 
   -webkit-mask-size:contain; mask-size:contain;
 }
 .logo-mark{
-  width:80px; aspect-ratio:1838/424;
-  -webkit-mask-image:url(../assets/brand/remble-mark-nav.svg);
-          mask-image:url(../assets/brand/remble-mark-nav.svg);
+  width:62px; aspect-ratio:1826/412;
+  -webkit-mask-image:url(../assets/brand/remble-mark.svg);
+          mask-image:url(../assets/brand/remble-mark.svg);
 }
 .logo-word{
-  width:148px; aspect-ratio:2539/263;
-  -webkit-mask-image:url(../assets/brand/remble-wordmark-nav.svg);
-          mask-image:url(../assets/brand/remble-wordmark-nav.svg);
+  width:118px; aspect-ratio:2539/263;
+  -webkit-mask-image:url(../assets/brand/remble-wordmark.svg);
+          mask-image:url(../assets/brand/remble-wordmark.svg);
 }
 
 .nav{ display:flex; align-items:center; gap:clamp(1.4rem,2.4vw,2.6rem); }
