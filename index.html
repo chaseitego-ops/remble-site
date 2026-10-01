@@ -23,7 +23,7 @@
 
 <link rel="stylesheet" href="css/fonts.css?v=1">
 
-<link rel="stylesheet" href="css/style.css?v=10">
+<link rel="stylesheet" href="css/style.css?v=25">
 </head>
 <body>
 
@@ -41,7 +41,8 @@
       <a href="#urun">Ürün</a>
       <a href="#form">Form</a>
       <a href="#kutu">Kutu</a>
-      <a href="#iletisim" class="nav-cta">İletişim</a>
+      <a href="#iletisim">İletişim</a>
+      <a href="satin-al.html">Remble</a>
     </nav>
 
     <button class="nav-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="Menüyü aç">
@@ -54,34 +55,42 @@
     <a href="#form">Form</a>
     <a href="#kutu">Kutu</a>
     <a href="#iletisim">İletişim</a>
+    <a href="satin-al.html">Remble</a>
   </nav>
 </header>
 
 <main id="main">
 <span id="top"></span>
 
-<!-- ─────────────────────────── HERO ─────────────────────────── -->
-<section class="hero">
-  <div class="shell">
-    <p class="eyebrow reveal">Tek parça ahşap <span class="dot"></span> El işçiliği</p>
+<!-- ─────────────────────────── HERO (hareketli, tam ekran) ─────────────────────────── -->
+<section class="hero hero--stage" data-hero-motion>
+  <div class="hs-stage">
+    <img class="hm-bg" src="assets/img/hero-zemin.webp?v=1" alt="Remble — Ayous ahşap gövde hafifçe sağa sola eğilirken çelik bilye kanal boyunca akıyor" width="2200" height="1643" fetchpriority="high">
+    <div class="hm-body" aria-hidden="true">
+      <img src="assets/img/hero-govde.webp?v=1" alt="" width="1824" height="181">
+      <img class="hm-ball" src="assets/img/hero-bilye.png?v=1" alt="" width="48" height="39">
+    </div>
+  </div>
 
-    <h1 class="hero-title reveal">
+  <div class="hs-top shell">
+    <p class="eyebrow reveal">Tek parça ahşap <span class="dot"></span> El işçiliği</p>
+    <h1 class="hero-title hs-title reveal">
       <span>Grounding.</span>
       <span>Connection.</span>
       <span>Regulation.</span>
     </h1>
-
     <p class="hero-sub reveal">Topraklanma · Bağlantı · Regülasyon</p>
+  </div>
 
+  <div class="hs-gap" aria-hidden="true"></div>
+
+  <div class="hs-bottom shell">
     <p class="hero-lede reveal">
       Remble, tek parça ahşaptan özenle işlendi; terapist eşliğinde kullanılmak
       ve terapötik sürece eşlik etmek için tasarlandı.
     </p>
+    <a class="btn hero-btn reveal" href="satin-al.html">Remble’ı edinin</a>
   </div>
-
-  <figure class="hero-figure reveal">
-    <img src="assets/img/hero.webp?v=2" alt="Remble — ceviz tonlu ahşap gövde, orta kanalda çelik bilye" width="2200" height="1643" fetchpriority="high">
-  </figure>
 </section>
 
 <!-- ─────────────────────────── REMBLE NEDİR ─────────────────────────── -->
@@ -95,17 +104,13 @@
     Yalnızca ahşap, çelik ve yerçekimi. Remble, dikkate izleyebileceği sakin ve öngörülebilir bir yol sunar.
     Görsel takip ve bedensel hareket, dikkatin şimdi ve burada kalmasını destekler.
   </p>
-  <p class="note reveal">
-    Remble bir tıbbi cihaz değildir; tanı koymaz, tedavi etmez. Ruh sağlığı alanında çalışan uzmanların
-    seans içi kullanımına yönelik tasarlanmış destekleyici bir araçtır.
-  </p>
 </section>
 
 <!-- ─────────────────────────── ÜÇ ODAK ─────────────────────────── -->
-<section class="section" id="odak">
+<section class="section section--rule" id="odak">
   <div class="shell">
     <p class="kicker center reveal">Üç odak</p>
-    <h2 class="h2 center reveal">Topraklanma. Bağlantı. Regülasyon.</h2>
+    <h2 class="h2 center reveal">Tek bir hareketin üç yönü</h2>
   </div>
 
   <div class="axis shell">
@@ -169,6 +174,10 @@
   <div class="shell">
     <p class="kicker center reveal">Form</p>
     <h2 class="h2 center reveal">Tek parça ahşaptan</h2>
+    <p class="lede center narrow reveal">
+      Remble, tek parça Ayous ahşaptan elde işlenir. Kavisli gövde ele doğal biçimde oturur;
+      boydan boya uzanan kanal, bilyeyi bir uçtan diğerine kesintisiz taşır.
+    </p>
   </div>
 
   <div class="shell craft">
@@ -178,7 +187,7 @@
     </figure>
     <figure class="craft-figure reveal">
       <img src="assets/img/zanaat-uzun-form.webp?v=2" alt="Remble’ın kanalındaki çelik bilye, ince bir ışık huzmesinde yakın plan" width="821" height="1100" loading="lazy">
-      <figcaption>Ağırlık ve denge — Hafif · Dengeli form</figcaption>
+      <figcaption>Kanal — Çelik bilye · Kesintisiz yol</figcaption>
     </figure>
   </div>
   <!-- "Tescilli Tasarım" ifadesi resmi tescil tamamlandığında bu bölüme eklenecek. -->
@@ -214,6 +223,7 @@
       <li>Keten Saklama Kılıfı</li>
       <li>Mıknatıslı Sunum Kutusu</li>
     </ul>
+    <p class="center"><a class="btn btn--light reveal" href="satin-al.html">Remble’ı edinin</a></p>
   </div>
 </section>
 
@@ -232,6 +242,16 @@
 
     <figure class="in-situ reveal">
       <img src="assets/img/kimler-icin-simetrik.webp?v=2" alt="Terapist, muayenehanesinde Remble’ı iki avucunda tutuyor" width="1700" height="1269" loading="lazy">
+    </figure>
+  </div>
+</section>
+
+<!-- ─────────────────────────── TÜRKİYE HARİTASI ─────────────────────────── -->
+<section class="section section--map" id="turkiye">
+  <div class="shell center">
+    <p class="kicker reveal">Türkiye’de Remble</p>
+    <figure class="tr-map reveal">
+      <img src="assets/img/turkiye-harita.svg?v=2" alt="Türkiye haritası; Remble’ın ulaştığı iller yanıp sönen ışıklarla işaretli" width="1000" height="442" loading="lazy">
     </figure>
   </div>
 </section>
@@ -320,6 +340,7 @@
     <nav class="footer-nav" aria-label="Alt menü">
       <a href="#urun">Ürün</a>
       <a href="#form">Form</a>
+      <a href="satin-al.html">Satın al</a>
       <a href="#sss">S.S.S.</a>
       <a href="#iletisim">İletişim</a>
       <a href="https://instagram.com/rembletools" target="_blank" rel="noopener">Instagram</a>
@@ -345,6 +366,7 @@
   </div>
 </footer>
 
-<script src="js/main.js?v=7"></script>
+<script src="js/main.js?v=9"></script>
+<script src="js/hero.js?v=1"></script>
 </body>
 </html>

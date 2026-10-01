@@ -97,6 +97,94 @@
     }
   });
 
+  /* ── Düğme dolgusu: imlecin girdiği noktadan yayılır ──
+     Giriş (ve çıkış) noktasını ve en uzak köşeyi örtecek çapı CSS'e verir. */
+  var btns = document.querySelectorAll('.btn:not(.btn--soon)');
+  Array.prototype.forEach.call(btns, function (btn) {
+    var setOrigin = function (e) {
+      var r = btn.getBoundingClientRect();
+      var x = Math.max(0, Math.min(r.width, e.clientX - r.left));
+      var y = Math.max(0, Math.min(r.height, e.clientY - r.top));
+      var far = Math.sqrt(Math.pow(Math.max(x, r.width - x), 2) +
+                          Math.pow(Math.max(y, r.height - y), 2));
+      btn.style.setProperty('--mx', x + 'px');
+      btn.style.setProperty('--my', y + 'px');
+      btn.style.setProperty('--d', (2 * far + 4) + 'px');
+    };
+    btn.addEventListener('mouseenter', setOrigin);
+    btn.addEventListener('mouseleave', setOrigin);
+  });
+
+  /* ── Görsel galerisi (satın alma sayfası) ──
+     Kaydırma tarayıcının kendi scroll-snap'i; burada oklar, küçük görseller,
+     klavye ve fareyle sürükleme eklenir. */
+  Array.prototype.forEach.call(document.querySelectorAll('[data-gallery]'), function (g) {
+    var track = g.querySelector('.gallery-track');
+    var thumbs = g.querySelectorAll('.gallery-thumb');
+    var arrows = g.querySelectorAll('.gallery-arrow');
+    var count = track.children.length;
+    var current = 0;
+
+    // Bir görselden diğerine kaydırma adımı (görsel genişliği + aradaki boşluk)
+    var step = function () {
+      return count > 1 ? track.children[1].offsetLeft - track.children[0].offsetLeft : track.clientWidth;
+    };
+    var goTo = function (i) {
+      i = Math.max(0, Math.min(count - 1, i));
+      track.scrollTo({ left: i * step(), behavior: reduce.matches ? 'auto' : 'smooth' });
+    };
+    var sync = function () {
+      current = Math.max(0, Math.min(count - 1, Math.round(track.scrollLeft / step())));
+      Array.prototype.forEach.call(thumbs, function (t, i) {
+        if (i === current) t.setAttribute('aria-current', 'true'); else t.removeAttribute('aria-current');
+      });
+      Array.prototype.forEach.call(arrows, function (a) {
+        var dir = Number(a.getAttribute('data-dir'));
+        a.disabled = (dir < 0 && current === 0) || (dir > 0 && current === count - 1);
+      });
+    };
+    track.addEventListener('scroll', sync, { passive: true });
+    window.addEventListener('resize', sync);
+
+    Array.prototype.forEach.call(thumbs, function (t, i) {
+      t.addEventListener('click', function () { goTo(i); });
+    });
+    Array.prototype.forEach.call(arrows, function (a) {
+      a.addEventListener('click', function () { goTo(current + Number(a.getAttribute('data-dir'))); });
+    });
+    track.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowRight') { e.preventDefault(); goTo(current + 1); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); goTo(current - 1); }
+    });
+
+    // Fareyle tutup sürükleme (dokunmatikte tarayıcı zaten kaydırır)
+    var drag = null;
+    track.addEventListener('pointerdown', function (e) {
+      if (e.pointerType !== 'mouse' || e.button !== 0) return;
+      drag = { x: e.clientX, left: track.scrollLeft, from: current };
+      track.classList.add('is-dragging');
+      track.setPointerCapture(e.pointerId);
+    });
+    track.addEventListener('pointermove', function (e) {
+      if (drag) track.scrollLeft = drag.left - (e.clientX - drag.x);
+    });
+    var endDrag = function (e) {
+      if (!drag) return;
+      var moved = e.clientX - drag.x;
+      var target = drag.from;
+      // Görselin altıda birinden fazla çekildiyse komşu görsele geç
+      if (Math.abs(moved) > track.clientWidth / 6) target += moved < 0 ? 1 : -1;
+      drag = null;
+      goTo(target);
+      // Yumuşak kaydırma bitene kadar snap kapalı kalsın, yoksa anında yerine atlar
+      setTimeout(function () { track.classList.remove('is-dragging'); }, reduce.matches ? 0 : 450);
+    };
+    track.addEventListener('pointerup', endDrag);
+    track.addEventListener('pointercancel', endDrag);
+
+    sync();
+  });
+
   /* ── Scroll reveal ── */
   var items = document.querySelectorAll('.reveal');
   if (!('IntersectionObserver' in window) ||
@@ -111,8 +199,11 @@
         var sibs = Array.prototype.slice.call(
           el.parentNode.querySelectorAll(':scope > .reveal'));
         var i = Math.max(0, sibs.indexOf(el));
-        el.style.transitionDelay = Math.min(i, 4) * 90 + 'ms';
+        var delay = Math.min(i, 4) * 90;
+        el.style.transitionDelay = delay + 'ms';
         el.classList.add('is-in');
+        // Belirme bitince gecikmeyi kaldır; yoksa düğmenin hover geçişleri de gecikir
+        setTimeout(function () { el.style.transitionDelay = ''; }, delay + 1100);
         io.unobserve(el);
       });
     }, { rootMargin: '0px 0px -80px 0px', threshold: 0 });
