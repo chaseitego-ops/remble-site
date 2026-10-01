@@ -388,6 +388,11 @@ button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; 
 .legal li{ margin-bottom:.45rem; }
 .legal li::marker{ color:var(--walnut); }
 .legal strong{ font-weight:500; color:var(--ink); }
+.legal .table-wrap{ overflow-x:auto; margin:1.25rem 0 1.75rem; -webkit-overflow-scrolling:touch; }
+.legal table{ width:100%; min-width:640px; border-collapse:collapse; font-size:.9375rem; }
+.legal th,.legal td{ text-align:left; vertical-align:top; padding:.8rem .95rem; border:1px solid var(--linen); line-height:1.65; color:var(--ink-soft); font-weight:400; }
+.legal thead th{ font-size:.75rem; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-mute); background:rgba(217,211,199,.28); }
+.legal tbody th{ font-weight:500; color:var(--ink); width:22%; }
 .legal a:not(.ph-inline){ color:var(--walnut); border-bottom:1px solid currentColor; }
 .legal-back{ margin-top:3.5rem; padding-top:2rem; border-top:1px solid var(--linen); }
 .legal-back a{ font-size:.75rem; letter-spacing:.2em; text-transform:uppercase; border-bottom:0 !important; }
