@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Siparişler — Remble</title>
+<meta name="description" content="Remble sipariş listesi (ekip içi).">
+<meta name="theme-color" content="#F7F2EA">
+<link rel="icon" href="assets/brand/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png">
+<meta name="robots" content="noindex, nofollow">
+<link rel="canonical" href="https://rembletools.com/siparisler.html">
+<link rel="stylesheet" href="css/fonts.css?v=1">
+<link rel="stylesheet" href="css/style.css?v=43">
+</head>
+<body>
+
+<a class="skip" href="#main">İçeriğe geç</a>
+
+<header class="site-header is-stuck" id="header">
+  <div class="shell header-inner">
+    <a class="brand" href="index.html" aria-label="Remble — ana sayfa">
+      <span class="logo-mark" role="img" aria-hidden="true"></span>
+      <span class="logo-word" role="img" aria-hidden="true"></span>
+    </a>
+    <nav class="nav" aria-label="Ana menü">
+      <div class="nav-item has-menu">
+        <button class="nav-trigger" type="button" aria-expanded="false" aria-haspopup="true">Ürün</button>
+        <div class="nav-menu" role="menu" aria-label="Ürünler">
+          <a class="nav-product" role="menuitem" href="satin-al.html">
+            <img class="nav-thumb" src="assets/img/nav-remble-origin.png" alt="" width="360" height="34"><span class="nav-product-name" lang="en">Remble Origin</span>
+          </a>
+          <span class="nav-product nav-product--soon" role="menuitem" aria-disabled="true">
+            <span class="nav-thumb nav-thumb--q" aria-hidden="true">?</span><span class="nav-product-name" lang="en">Remble Playland</span>
+          </span>
+        </div>
+      </div>
+      <a href="index.html#form">Form</a>
+      <a href="index.html#kutu">Kutu</a>
+      <a href="index.html#iletisim">İletişim</a>
+      <a href="index.html#urun">Remble</a>
+    </nav>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="Menüyü aç"><span></span><span></span></button>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobil menü" data-open="false">
+    <div class="mobile-group">
+      <span class="mobile-label">Ürün</span>
+      <a class="mobile-sub" href="satin-al.html">Remble Origin</a>
+      <span class="mobile-sub mobile-sub--soon">Remble Playland</span>
+    </div>
+    <a href="index.html#form">Form</a>
+    <a href="index.html#kutu">Kutu</a>
+    <a href="index.html#iletisim">İletişim</a>
+    <a href="index.html#urun">Remble</a>
+  </nav>
+</header>
+
+<main id="main">
+<article class="legal shell">
+  <p class="kicker">Ekip içi</p>
+  <h1 class="legal-title">Siparişler</h1>
+  <p class="legal-meta">Ödemesi onaylanan siparişler, en yeniden eskiye. Teslimat ve fatura bilgileri buradan alınır.</p>
+
+  <form class="order" id="anahtar-form" style="margin-top:0;padding-top:0;border-top:0">
+    <div class="field">
+      <label for="anahtar">Erişim anahtarı</label>
+      <input id="anahtar" type="password" autocomplete="current-password" required>
+    </div>
+    <button class="btn btn--solid" type="submit" style="width:auto">Listele</button>
+  </form>
+
+  <p class="order-error" id="hata" role="alert" hidden></p>
+  <div id="liste"></div>
+
+  <p class="legal-back"><a href="index.html">← Ana sayfaya dön</a></p>
+</article>
+</main>
+
+<script>
+(function(){
+  var f=document.getElementById('anahtar-form'),h=document.getElementById('hata'),l=document.getElementById('liste');
+  function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  function tl(k){return (Number(k)/100).toLocaleString('tr-TR',{minimumFractionDigits:2})+' TL';}
+  f.addEventListener('submit',function(e){
+    e.preventDefault(); h.hidden=true; l.innerHTML='<p>Yükleniyor…</p>';
+    fetch('/api/siparisler?anahtar='+encodeURIComponent(document.getElementById('anahtar').value))
+      .then(function(r){return r.json().then(function(j){return {ok:r.ok,j:j};});})
+      .then(function(res){
+        if(!res.ok){ l.innerHTML=''; h.textContent=res.j.hata||'Hata.'; h.hidden=false; return; }
+        if(!res.j.siparisler.length){ l.innerHTML='<p>Henüz ödenmiş sipariş yok.</p>'; return; }
+        var html='';
+        res.j.siparisler.forEach(function(s){
+          var m=s.musteri||{}, r=s.sonuc||{};
+          html+='<div class="table-wrap"><table><tbody>'
+            +'<tr><th scope="row">Sipariş no</th><td><strong>'+esc(s.siparisNo)+'</strong>'+(r.testModu==='1'?' <em>(test)</em>':'')+'</td></tr>'
+            +'<tr><th scope="row">Tarih</th><td>'+esc((r.zaman||s.olusturma||'').replace('T',' ').slice(0,16))+'</td></tr>'
+            +'<tr><th scope="row">Tutar</th><td>'+tl(r.toplamKurus||s.tutarKurus)+(r.taksit&&r.taksit!=='1'&&r.taksit!=='0'?' · '+esc(r.taksit)+' taksit':'')+'</td></tr>'
+            +'<tr><th scope="row">Ad soyad</th><td>'+esc(m.ad)+'</td></tr>'
+            +'<tr><th scope="row">Telefon</th><td>'+esc(m.telefon)+'</td></tr>'
+            +'<tr><th scope="row">E-posta</th><td>'+esc(m.eposta)+'</td></tr>'
+            +'<tr><th scope="row">Teslimat adresi</th><td>'+esc(m.adres)+(m.il?' — '+esc(m.il):'')+'</td></tr>'
+            +'<tr><th scope="row">Fatura</th><td>'+(m.fatura?esc(m.fatura):'Şahıs adına')+'</td></tr>'
+            +'</tbody></table></div>';
+        });
+        l.innerHTML=html;
+      }).catch(function(){ l.innerHTML=''; h.textContent='Bağlantı kurulamadı.'; h.hidden=false; });
+  });
+})();
+</script>
+
+<footer class="site-footer">
+  <div class="shell footer-inner">
+    <span class="logo-word logo-word--footer" role="img" aria-label="Remble"></span>
+    <nav class="footer-nav" aria-label="Alt menü">
+      <a href="index.html#urun">Ürün</a>
+      <a href="index.html#form">Form</a>
+      <a href="satin-al.html">Satın al</a>
+      <a href="index.html#sss">S.S.S.</a>
+      <a href="index.html#iletisim">İletişim</a>
+      <a href="https://instagram.com/rembletools" target="_blank" rel="noopener">Instagram</a>
+    </nav>
+    <nav class="footer-legal-links" aria-label="Yasal metinler">
+      <a href="kvkk-aydinlatma-metni.html">KVKK Aydınlatma Metni</a>
+      <a href="iptal-iade-kosullari.html">İptal ve İade</a>
+      <a href="on-bilgilendirme-formu.html">Ön Bilgilendirme</a>
+      <a href="mesafeli-satis-sozlesmesi.html">Mesafeli Satış Sözleşmesi</a>
+      <a href="satici-bilgileri.html">Satıcı Bilgileri</a>
+    </nav>
+    <p class="footer-legal">
+      Remble © <span id="year">2026</span>
+      <span class="dot"></span> rembletools.com
+    </p>
+    <p class="footer-disclaimer">
+      Remble bir tıbbi cihaz değildir. Tanı ve tedavi amacıyla kullanılamaz.
+      Ruh sağlığı uzmanlarının seans içi kullanımı için tasarlanmıştır.
+    </p>
+  </div>
+</footer>
+
+<script src="js/main.js?v=10"></script>
+</body>
+</html>

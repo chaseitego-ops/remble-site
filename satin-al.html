@@ -10,7 +10,7 @@
 <link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png">
 <link rel="canonical" href="https://rembletools.com/satin-al.html">
 <link rel="stylesheet" href="css/fonts.css?v=1">
-<link rel="stylesheet" href="css/style.css?v=25">
+<link rel="stylesheet" href="css/style.css?v=43">
 </head>
 <body>
 
@@ -23,20 +23,34 @@
       <span class="logo-word" role="img" aria-hidden="true"></span>
     </a>
     <nav class="nav" aria-label="Ana menü">
-      <a href="index.html#urun">Ürün</a>
+      <div class="nav-item has-menu">
+        <button class="nav-trigger" type="button" aria-expanded="false" aria-haspopup="true">Ürün</button>
+        <div class="nav-menu" role="menu" aria-label="Ürünler">
+          <a class="nav-product" role="menuitem" href="satin-al.html" aria-current="page">
+            <img class="nav-thumb" src="assets/img/nav-remble-origin.png" alt="" width="360" height="34"><span class="nav-product-name" lang="en">Remble Origin</span>
+          </a>
+          <span class="nav-product nav-product--soon" role="menuitem" aria-disabled="true">
+            <span class="nav-thumb nav-thumb--q" aria-hidden="true">?</span><span class="nav-product-name" lang="en">Remble Playland</span>
+          </span>
+        </div>
+      </div>
       <a href="index.html#form">Form</a>
       <a href="index.html#kutu">Kutu</a>
       <a href="index.html#iletisim">İletişim</a>
-      <a href="satin-al.html" aria-current="page">Remble</a>
+      <a href="index.html#urun">Remble</a>
     </nav>
     <button class="nav-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="Menüyü aç"><span></span><span></span></button>
   </div>
   <nav class="mobile-nav" id="mobile-nav" aria-label="Mobil menü" data-open="false">
-    <a href="index.html#urun">Ürün</a>
+    <div class="mobile-group">
+      <span class="mobile-label">Ürün</span>
+      <a class="mobile-sub" href="satin-al.html" aria-current="page">Remble Origin</a>
+      <span class="mobile-sub mobile-sub--soon">Remble Playland</span>
+    </div>
     <a href="index.html#form">Form</a>
     <a href="index.html#kutu">Kutu</a>
     <a href="index.html#iletisim">İletişim</a>
-    <a href="satin-al.html" aria-current="page">Remble</a>
+    <a href="index.html#urun">Remble</a>
   </nav>
 </header>
 
@@ -79,14 +93,62 @@
         <li>Teslimden itibaren 14 gün içinde iade hakkı</li>
       </ul>
 
-      <span class="btn btn--soon" aria-disabled="true">Çok yakında</span>
+      <a class="btn" id="satin-al-ac" href="#siparis">Satın al</a>
+      <details class="taksit">
+        <summary>Taksit seçenekleri</summary>
+        <div class="taksit-body">
+          <div id="paytr_taksit_tablosu"></div>
+          <p class="taksit-note">Tablo PayTR tarafından güncellenir; kartınıza uygulanacak tutar ödeme ekranında kesinleşir.</p>
+        </div>
+      </details>
+
+      <form class="order" id="siparis" hidden novalidate aria-labelledby="siparis-baslik">
+        <h2 class="order-title" id="siparis-baslik">Teslimat bilgileri</h2>
+        <p class="order-note">Ödeme, PayTR güvenli ödeme ekranında kredi kartı ya da banka kartıyla yapılır. Kart bilgileriniz sitemize ulaşmaz.</p>
+
+        <div class="field">
+          <label for="f-ad">Ad soyad</label>
+          <input id="f-ad" name="ad" type="text" autocomplete="name" required maxlength="60">
+        </div>
+        <div class="field">
+          <label for="f-eposta">E-posta</label>
+          <input id="f-eposta" name="eposta" type="email" autocomplete="email" required maxlength="100" inputmode="email">
+        </div>
+        <div class="field">
+          <label for="f-telefon">Telefon</label>
+          <input id="f-telefon" name="telefon" type="tel" autocomplete="tel" required maxlength="20" inputmode="tel" placeholder="05xx xxx xx xx">
+        </div>
+        <div class="field">
+          <label for="f-adres">Teslimat adresi</label>
+          <textarea id="f-adres" name="adres" rows="3" autocomplete="street-address" required maxlength="300"></textarea>
+        </div>
+        <div class="field">
+          <label for="f-il">İl</label>
+          <input id="f-il" name="il" type="text" autocomplete="address-level1" required maxlength="40">
+        </div>
+        <div class="field">
+          <label for="f-fatura">Fatura bilgileri <span class="field-opt">isteğe bağlı</span></label>
+          <textarea id="f-fatura" name="fatura" rows="2" maxlength="300" placeholder="Fatura şahsınıza değil kliniğinize kesilecekse unvan, vergi dairesi ve vergi numarası"></textarea>
+        </div>
+        <label class="check">
+          <input type="checkbox" name="onay" required>
+          <span><a href="on-bilgilendirme-formu.html" target="_blank" rel="noopener">Ön Bilgilendirme Formu</a>’nu ve <a href="mesafeli-satis-sozlesmesi.html" target="_blank" rel="noopener">Mesafeli Satış Sözleşmesi</a>’ni okudum, kabul ediyorum.</span>
+        </label>
+        <p class="order-kvkk">Bilgileriniz yalnızca siparişinizin yerine getirilmesi için işlenir. <a href="kvkk-aydinlatma-metni.html" target="_blank" rel="noopener">KVKK Aydınlatma Metni</a></p>
+        <p class="order-error" id="siparis-hata" role="alert" hidden></p>
+        <button class="btn btn--solid" type="submit" id="siparis-gonder">Ödemeye geç · 14.999 TL</button>
+      </form>
+
+      <div class="payframe" id="odeme-alani" hidden aria-live="polite"></div>
 
       <p class="buy-foot">
-        Çevrimiçi satış kısa süre içinde açılıyor. Bilgi almak ve toplu alımlar için
+        Bilgi almak ve toplu alımlar için
         <a href="mailto:info@rembletools.com?subject=Remble%20-%20Sat%C4%B1n%20alma">bize yazın</a>.
       </p>
       <p class="buy-legal">
         <a href="on-bilgilendirme-formu.html">Ön bilgilendirme</a>
+        <span class="dot" aria-hidden="true"></span>
+        <a href="mesafeli-satis-sozlesmesi.html">Mesafeli satış sözleşmesi</a>
         <span class="dot" aria-hidden="true"></span>
         <a href="iptal-iade-kosullari.html">İptal ve iade koşulları</a>
         <span class="dot" aria-hidden="true"></span>
@@ -134,6 +196,8 @@
   </div>
 </footer>
 
-<script src="js/main.js?v=9"></script>
+<script src="js/main.js?v=10"></script>
+<script src="js/siparis.js?v=1" defer></script>
+<script src="https://www.paytr.com/odeme/taksit-tablosu/v2?token=a23b71932401e057a564cc73e12a40d4040b404905d41b5acb1259ba0b98b650&merchant_id=772780&amount=14999.00&taksit=6&tumu=1" defer></script>
 </body>
 </html>

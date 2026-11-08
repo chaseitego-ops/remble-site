@@ -31,6 +31,17 @@
     });
   }
 
+  /* ── Ürün açılır menüsü (dokunmatik + klavye; fare için CSS :hover yeter) ── */
+  var trig = document.querySelector('.nav-trigger');
+  if (trig) {
+    var item = trig.parentNode;
+    var menuOpen = function (open) { trig.setAttribute('aria-expanded', String(open)); };
+    trig.addEventListener('click', function () { menuOpen(trig.getAttribute('aria-expanded') !== 'true'); });
+    document.addEventListener('click', function (e) { if (!item.contains(e.target)) menuOpen(false); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') menuOpen(false); });
+    item.addEventListener('mouseleave', function () { menuOpen(false); });
+  }
+
   /* ── Yumuşak bölüm geçişi ──
      Tarayıcının kendi scroll-behavior:smooth'u uzun mesafede neredeyse anlık
      çalışıyor ve ışınlanma hissi veriyor. Mesafeye göre süre veren kendi
