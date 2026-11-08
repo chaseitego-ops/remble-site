@@ -202,7 +202,15 @@ button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; 
   letter-spacing:0; text-transform:none; color:var(--ink-mute); padding:0; position:static;
 }
 .nav .nav-menu .nav-product-name{ position:static; padding:0; font-size:inherit; letter-spacing:inherit; text-transform:inherit; font-weight:inherit; color:inherit; white-space:nowrap; }
+/* üzerine gelinen satır hafifçe öne çıksın */
+.nav .nav-menu .nav-product{ transition:color .3s var(--ease), transform .35s var(--ease); }
+.nav .nav-menu .nav-product:hover{ transform:translateX(4px); }
+.nav .nav-menu .nav-thumb,.nav .nav-menu .nav-thumb--q{ transition:transform .35s var(--ease), color .3s var(--ease); transform-origin:50% 50%; }
+.nav .nav-menu .nav-product:hover .nav-thumb{ transform:scale(1.06); }
 .nav .nav-menu .nav-product--soon{ cursor:default; color:var(--ink-mute); }
+.nav .nav-menu .nav-product--soon:hover{ color:var(--ink-soft); }
+.nav .nav-menu .nav-product--soon:hover .nav-thumb--q{ color:var(--ink-soft); }
+@media (prefers-reduced-motion:reduce){ .nav .nav-menu .nav-product,.nav .nav-menu .nav-thumb{ transition:none; transform:none !important; } }
 
 .nav-toggle{ display:none; width:32px; height:32px; position:relative; }
 .nav-toggle span{
