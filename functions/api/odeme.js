@@ -1,6 +1,6 @@
 /* POST /api/odeme — sipariş formunu alır, PayTR'den iFrame jetonu ister.
    Gizli anahtarlar yalnızca burada (sunucu tarafında) kullanılır. */
-import { hmacBase64, json, URUN, temizle, siparisNo, b64utf8 } from '../_lib.js';
+import { hmacBase64, json, temizle, siparisNo, b64utf8, sepetCoz, kurusMetin, MAX_ADET } from '../_lib.js';
 
 export async function onRequestPost({ request, env }) {
   if (!env.PAYTR_MERCHANT_ID || !env.PAYTR_MERCHANT_KEY || !env.PAYTR_MERCHANT_SALT) {
@@ -27,12 +27,16 @@ export async function onRequestPost({ request, env }) {
   if (!onay) hatalar.push('onay');
   if (hatalar.length) return json({ hata: 'Eksik ya da hatalı alanlar var.', alanlar: hatalar }, 400);
 
+  // Sepet: ürün ve adet istekten, fiyat yalnızca sunucudaki katalogdan
+  const siparis = sepetCoz(body.sepet);
+  if (!siparis) return json({ hata: 'Sepetiniz boş ya da geçersiz. Bir siparişte en fazla ' + MAX_ADET + ' adet alınabilir.', alanlar: ['sepet'] }, 400);
+
   const ip = request.headers.get('CF-Connecting-IP') || '0.0.0.0';
   const oid = siparisNo();
   const site = new URL(request.url).origin;
 
-  const tutar = String(URUN.fiyatKurus);
-  const sepet = b64utf8(JSON.stringify([[URUN.ad, URUN.fiyatMetin, 1]]));
+  const tutar = String(siparis.toplamKurus);
+  const sepet = b64utf8(JSON.stringify(siparis.kalemler.map(k => [k.ad, kurusMetin(k.birimKurus), k.adet])));
   const taksitYok = '0';
   const maxTaksit = String(env.PAYTR_MAX_INSTALLMENT || '0');   // 0 = panelde izin verilen en yüksek
   const paraBirimi = 'TL';
@@ -85,7 +89,8 @@ export async function onRequestPost({ request, env }) {
     try {
     await env.SIPARIS.put('siparis:' + oid, JSON.stringify({
       siparisNo: oid, durum: 'beklemede', olusturma: new Date().toISOString(),
-      urun: URUN.ad, tutarKurus: URUN.fiyatKurus, testModu,
+      urun: siparis.kalemler.map(k => k.ad + ' × ' + k.adet).join(', '),
+      kalemler: siparis.kalemler, tutarKurus: siparis.toplamKurus, testModu,
       musteri: { ad, eposta, telefon: tel, adres, il, fatura },
     }), { expirationTtl: 60 * 60 * 24 * 400 });
     } catch (e) { console.log('KV yazma hatasi:', String(e)); }

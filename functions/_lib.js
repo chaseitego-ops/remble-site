@@ -22,12 +22,38 @@ export function text(body, status = 200) {
   return new Response(body, { status, headers: { 'content-type': 'text/plain; charset=utf-8', 'cache-control': 'no-store' } });
 }
 
-/** Ürün ve fiyat tek yerde durur. Tutar kuruş cinsinden tam sayı. */
-export const URUN = {
-  ad: 'Remble',
-  fiyatKurus: 1499900,          // 14.999,00 TL — KDV ve kargo dahil
-  fiyatMetin: '14999.00',
+/** Ürünler ve fiyatlar tek yerde durur (asıl kaynak burası; js/sepet.js'teki katalog yalnızca gösterim içindir).
+    Tutar kuruş cinsinden tam sayı, KDV ve kargo dahil. */
+export const URUNLER = {
+  origin: { ad: 'Remble Origin', fiyatKurus: 1499900 },   // 14.999,00 TL
 };
+export const MAX_ADET = 10;   // bir siparişte toplam adet sınırı
+
+export function kurusMetin(k) { return (k / 100).toFixed(2); }
+
+/** İstekle gelen sepeti doğrular ve fiyatları buradan hesaplar.
+    Sepet hiç gönderilmemişse (eski sayfa önbelleği) 1 adet Remble Origin sayılır.
+    Geçersizse null döner. */
+export function sepetCoz(girdi) {
+  if (girdi === undefined || girdi === null) girdi = [{ id: 'origin', adet: 1 }];
+  if (!Array.isArray(girdi) || girdi.length === 0 || girdi.length > 20) return null;
+  const adetler = {};
+  for (const k of girdi) {
+    if (!k || typeof k.id !== 'string' || !Object.prototype.hasOwnProperty.call(URUNLER, k.id)) return null;
+    if (typeof k.adet !== 'number' || !Number.isInteger(k.adet) || k.adet < 1 || k.adet > MAX_ADET) return null;
+    adetler[k.id] = (adetler[k.id] || 0) + k.adet;
+  }
+  let toplamAdet = 0, toplamKurus = 0;
+  const kalemler = [];
+  for (const id of Object.keys(adetler)) {
+    const u = URUNLER[id];
+    toplamAdet += adetler[id];
+    toplamKurus += u.fiyatKurus * adetler[id];
+    kalemler.push({ id, ad: u.ad, adet: adetler[id], birimKurus: u.fiyatKurus });
+  }
+  if (toplamAdet > MAX_ADET) return null;
+  return { kalemler, toplamAdet, toplamKurus };
+}
 
 /** UTF-8 metni base64'e çevirir (user_basket için) */
 export function b64utf8(str) {

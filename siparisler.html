@@ -11,7 +11,7 @@
 <meta name="robots" content="noindex, nofollow">
 <link rel="canonical" href="https://rembletools.com/siparisler.html">
 <link rel="stylesheet" href="css/fonts.css?v=1">
-<link rel="stylesheet" href="css/style.css?v=45">
+<link rel="stylesheet" href="css/style.css?v=47">
 </head>
 <body>
 
@@ -94,6 +94,7 @@
           html+='<div class="table-wrap"><table><tbody>'
             +'<tr><th scope="row">Sipariş no</th><td><strong>'+esc(s.siparisNo)+'</strong>'+(r.testModu==='1'?' <em>(test)</em>':'')+'</td></tr>'
             +'<tr><th scope="row">Tarih</th><td>'+esc((r.zaman||s.olusturma||'').replace('T',' ').slice(0,16))+'</td></tr>'
+            +'<tr><th scope="row">Ürün</th><td>'+(s.kalemler&&s.kalemler.length?s.kalemler.map(function(k){return esc(k.ad)+' × '+esc(k.adet);}).join(', '):esc(s.urun||'Remble')+' × 1')+'</td></tr>'
             +'<tr><th scope="row">Tutar</th><td>'+tl(r.toplamKurus||s.tutarKurus)+(r.taksit&&r.taksit!=='1'&&r.taksit!=='0'?' · '+esc(r.taksit)+' taksit':'')+'</td></tr>'
             +'<tr><th scope="row">Ad soyad</th><td>'+esc(m.ad)+'</td></tr>'
             +'<tr><th scope="row">Telefon</th><td>'+esc(m.telefon)+'</td></tr>'
@@ -138,5 +139,6 @@
 </footer>
 
 <script src="js/main.js?v=10"></script>
+<script src="js/sepet.js?v=1"></script>
 </body>
 </html>

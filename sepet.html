@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sepet — Remble</title>
+<meta name="description" content="Remble sepetiniz ve sipariş bilgileri.">
+<meta name="theme-color" content="#F7F2EA">
+<link rel="icon" href="assets/brand/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://rembletools.com/sepet.html">
+<link rel="stylesheet" href="css/fonts.css?v=1">
+<link rel="stylesheet" href="css/style.css?v=47">
+</head>
+<body data-sayfa="sepet">
+
+<a class="skip" href="#main">İçeriğe geç</a>
+
+<header class="site-header is-stuck" id="header">
+  <div class="shell header-inner">
+    <a class="brand" href="index.html" aria-label="Remble — ana sayfa">
+      <span class="logo-mark" role="img" aria-hidden="true"></span>
+      <span class="logo-word" role="img" aria-hidden="true"></span>
+    </a>
+    <nav class="nav" aria-label="Ana menü">
+      <div class="nav-item has-menu">
+        <button class="nav-trigger" type="button" aria-expanded="false" aria-haspopup="true">Ürünler</button>
+        <div class="nav-menu" role="menu" aria-label="Ürünler">
+          <a class="nav-product" role="menuitem" href="satin-al.html">
+            <img class="nav-thumb" src="assets/img/nav-remble-origin.png" alt="" width="360" height="34"><span class="nav-product-name" lang="en">Remble Origin</span>
+          </a>
+          <span class="nav-product nav-product--soon" role="menuitem" aria-disabled="true">
+            <span class="nav-thumb nav-thumb--q" aria-hidden="true">?</span><span class="nav-product-name" lang="en">Remble Playland</span>
+          </span>
+        </div>
+      </div>
+      <a href="index.html#form">Form</a>
+      <a href="index.html#kutu">Kutu</a>
+      <a href="index.html#iletisim">İletişim</a>
+      <a href="index.html#urun">Remble</a>
+    </nav>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="Menüyü aç"><span></span><span></span></button>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobil menü" data-open="false">
+    <div class="mobile-group">
+      <span class="mobile-label">Ürünler</span>
+      <a class="mobile-sub" href="satin-al.html">Remble Origin</a>
+      <span class="mobile-sub mobile-sub--soon">Remble Playland</span>
+    </div>
+    <a href="index.html#form">Form</a>
+    <a href="index.html#kutu">Kutu</a>
+    <a href="index.html#iletisim">İletişim</a>
+    <a href="index.html#urun">Remble</a>
+  </nav>
+</header>
+
+<main id="main">
+<section class="checkout shell">
+  <p class="kicker">Sepet</p>
+  <h1 class="checkout-title">Sepetiniz</h1>
+
+  <div class="checkout-empty" id="sepet-bos" hidden>
+    <p>Sepetiniz boş.</p>
+    <a class="btn" href="satin-al.html">Ürünü inceleyin</a>
+  </div>
+
+  <div class="checkout-grid" id="sepet-dolu" hidden>
+    <div class="checkout-lines">
+      <div id="sepet-kalemler"></div>
+      <p class="checkout-back"><a href="satin-al.html">&larr; Alışverişe devam et</a></p>
+    </div>
+
+    <aside class="checkout-summary" aria-label="Sipariş özeti">
+      <p class="sum-title">Sipariş özeti</p>
+      <div id="sepet-ozet"></div>
+    </aside>
+
+    <div class="checkout-form">
+      <form class="order" id="siparis" novalidate aria-labelledby="siparis-baslik">
+        <h2 class="order-title" id="siparis-baslik"><span id="teslimat"></span>Teslimat bilgileri</h2>
+        <p class="order-note">Ödeme, PayTR güvenli ödeme ekranında kredi kartı ya da banka kartıyla yapılır. Kart bilgileriniz sitemize ulaşmaz.</p>
+
+        <div class="field">
+          <label for="f-ad">Ad soyad</label>
+          <input id="f-ad" name="ad" type="text" autocomplete="name" required maxlength="60">
+        </div>
+        <div class="field">
+          <label for="f-eposta">E-posta</label>
+          <input id="f-eposta" name="eposta" type="email" autocomplete="email" required maxlength="100" inputmode="email">
+        </div>
+        <div class="field">
+          <label for="f-telefon">Telefon</label>
+          <input id="f-telefon" name="telefon" type="tel" autocomplete="tel" required maxlength="20" inputmode="tel" placeholder="05xx xxx xx xx">
+        </div>
+        <div class="field">
+          <label for="f-adres">Teslimat adresi</label>
+          <textarea id="f-adres" name="adres" rows="3" autocomplete="street-address" required maxlength="300"></textarea>
+        </div>
+        <div class="field">
+          <label for="f-il">İl</label>
+          <input id="f-il" name="il" type="text" autocomplete="address-level1" required maxlength="40">
+        </div>
+        <div class="field">
+          <label for="f-fatura">Fatura bilgileri <span class="field-opt">isteğe bağlı</span></label>
+          <textarea id="f-fatura" name="fatura" rows="2" maxlength="300" placeholder="Fatura şahsınıza değil kliniğinize kesilecekse unvan, vergi dairesi ve vergi numarası"></textarea>
+        </div>
+        <label class="check">
+          <input type="checkbox" name="onay" required>
+          <span><a href="on-bilgilendirme-formu.html" target="_blank" rel="noopener">Ön Bilgilendirme Formu</a>’nu ve <a href="mesafeli-satis-sozlesmesi.html" target="_blank" rel="noopener">Mesafeli Satış Sözleşmesi</a>’ni okudum, kabul ediyorum.</span>
+        </label>
+        <p class="order-kvkk">Bilgileriniz yalnızca siparişinizin yerine getirilmesi için işlenir. <a href="kvkk-aydinlatma-metni.html" target="_blank" rel="noopener">KVKK Aydınlatma Metni</a></p>
+        <p class="order-error" id="siparis-hata" role="alert" hidden></p>
+        <button class="btn btn--solid" type="submit" id="siparis-gonder">Ödemeye geç · 14.999 TL</button>
+      </form>
+
+      <div class="payframe" id="odeme-alani" hidden aria-live="polite"></div>
+    </div>
+  </div>
+
+  <noscript><p>Sepet ve ödeme için tarayıcınızda JavaScript açık olmalıdır. Sipariş için <a href="mailto:info@rembletools.com">info@rembletools.com</a> adresine yazabilirsiniz.</p></noscript>
+</section>
+</main>
+
+<footer class="site-footer">
+  <div class="shell footer-inner">
+    <span class="logo-word logo-word--footer" role="img" aria-label="Remble"></span>
+    <nav class="footer-nav" aria-label="Alt menü">
+      <a href="index.html#urun">Ürün</a>
+      <a href="index.html#form">Form</a>
+      <a href="satin-al.html">Satın al</a>
+      <a href="index.html#sss">S.S.S.</a>
+      <a href="index.html#iletisim">İletişim</a>
+      <a href="https://instagram.com/rembletools" target="_blank" rel="noopener">Instagram</a>
+    </nav>
+    <nav class="footer-legal-links" aria-label="Yasal metinler">
+      <a href="kvkk-aydinlatma-metni.html">KVKK Aydınlatma Metni</a>
+      <a href="iptal-iade-kosullari.html">İptal ve İade</a>
+      <a href="on-bilgilendirme-formu.html">Ön Bilgilendirme</a>
+      <a href="mesafeli-satis-sozlesmesi.html">Mesafeli Satış Sözleşmesi</a>
+      <a href="satici-bilgileri.html">Satıcı Bilgileri</a>
+    </nav>
+    <p class="footer-legal">
+      Remble © <span id="year">2026</span>
+      <span class="dot"></span> rembletools.com
+    </p>
+    <p class="footer-disclaimer">
+      Remble bir tıbbi cihaz değildir. Tanı ve tedavi amacıyla kullanılamaz.
+      Ruh sağlığı uzmanlarının seans içi kullanımı için tasarlanmıştır.
+    </p>
+  </div>
+</footer>
+
+<script src="js/main.js?v=10"></script>
+<script src="js/sepet.js?v=1"></script>
+<script src="js/siparis.js?v=2"></script>
+</body>
+</html>

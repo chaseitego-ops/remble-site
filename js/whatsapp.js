@@ -1,10 +1,10 @@
 /* Remble — sağ alttaki WhatsApp düğmesi ve zaman zaman açılan soru balonu.
    Numara tek yerden girilir: WA_NUMARA (ülke koduyla, boşluksuz, örn. 905XXXXXXXXX).
-   Boşken düğme ve balon görünür ama tıklanınca bir yere gitmez. */
+   Boşken düğme ve balon görünür ama tıklanınca bir yere gitmez; data-wa bağlantıları kendi adresinde kalır. */
 (function () {
   'use strict';
 
-  var WA_NUMARA = '';
+  var WA_NUMARA = '905423116241';
 
   /* Soru balonu HOLD (8 Kasım 2026, psikolog metinleri düşünüyor). Açmak için true yap. */
   var BALON_ACIK = false;
@@ -23,15 +23,28 @@
     'Teslimat süreciyle ilgili aklınıza takılan bir şey var mı?'
   ];
 
+  var baglanti = function (yazi) {
+    return 'https://wa.me/' + WA_NUMARA + (yazi ? '?text=' + encodeURIComponent(yazi) : '');
+  };
+
+  /* Sayfadaki WhatsApp bağlantıları: data-wa="hazır mesaj" taşıyan her bağlantı numara girilince
+     WhatsApp'a döner (numara yokken kendi href'i, örn. e-posta, geçerli kalır).
+     data-wa-goster taşıyanın yazısı da numaranın okunur hâli olur. */
+  if (WA_NUMARA) {
+    var okunur = WA_NUMARA.replace(/^90(\d{3})(\d{3})(\d{2})(\d{2})$/, '+90 $1 $2 $3 $4');
+    if (okunur === WA_NUMARA) okunur = '+' + WA_NUMARA;
+    Array.prototype.forEach.call(document.querySelectorAll('[data-wa]'), function (el) {
+      el.href = baglanti(el.getAttribute('data-wa'));
+      el.target = '_blank'; el.rel = 'noopener';
+      if (el.hasAttribute('data-wa-goster')) el.textContent = okunur;
+    });
+  }
+
   var fab = document.querySelector('.wa-fab');
   var balon = document.querySelector('.wa-bubble');
   if (!fab || !balon) return;
   var metin = balon.querySelector('.wa-bubble-text');
   var kapat = balon.querySelector('.wa-bubble-close');
-
-  var baglanti = function (yazi) {
-    return 'https://wa.me/' + WA_NUMARA + (yazi ? '?text=' + encodeURIComponent(yazi) : '');
-  };
   if (WA_NUMARA) {
     fab.href = baglanti('Merhaba, Remble hakkında bilgi almak istiyorum.');
     fab.target = '_blank'; fab.rel = 'noopener';
